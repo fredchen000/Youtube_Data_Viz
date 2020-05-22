@@ -1,0 +1,199 @@
+<!-- <!DOCTYPE html>
+<script src="https://d3js.org/d3.v4.js"></script>
+<div id="my_dataviz"></div>
+<style>
+svg
+{
+    font-family: sanserif;
+    font-size: 10;
+}
+.tooltip {
+    position: absolute;
+    pointer-events: none;
+    height: 20px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: white;
+    font-size: .8em;
+}
+</style> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<div id="my_dataviz"></div>
+<div id="tooltip"></div>
+
+
+<script>
+var width = 500
+var height = 500
+var names = ['Music', 'Comedy', 'Entertainment', 'News & Politics', 'Style', 'Film', "Very Popular", "Popular", "Normal", "Not Popular"]
+
+var outerRadius = Math.min(width, height) * 0.5 - 30
+var innerRadius = outerRadius - 20
+var height = Math.min(640, width)
+
+var color = d3.scaleOrdinal()
+    .domain(d3.range(names.length))
+    .range(["#828684", "#ded2c2", "#ebb48c", "#819582", "#d08a55", "#c2c9c9", "#ABA6BF", "#ecb7bf", "#583E2E", "#F1E0D6"])
+
+var tooltip = d3.select("#my_dataviz")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("width","text.length + 'px'")
+    .style("position", "absolute")
+    .style("pointer-events", "none")
+    .style("height", "20px")
+    .style("padding", "8px")
+    .style("border-radius", "8px")
+    .style("background-color", "white")
+    .style("font-size", "10px");
+
+var ribbon = d3.ribbon()
+    .radius(innerRadius);
+
+var arc = d3.arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius);
+
+var chord = d3.chord()
+    .padAngle(0.05)
+    .sortSubgroups(d3.descending);
+
+var opacityDefault = 0.8
+
+var formatValue = d3.formatPrefix(",.0", 1e3);
+
+function groupTicks(d, step) {
+    const k = (d.endAngle - d.startAngle) / d.value;
+    return d3.range(0, d.value, step).map(value => {
+        return {value: value, angle: value * k + d.startAngle};
+    });
+}
+
+var data = [[0, 0, 0, 0, 0, 0, 29757, 2407, 3278, 6403],
+             [0, 0, 0, 0, 0, 0, 15191, 2513, 3234, 5381],
+             [0, 0, 0, 0, 0, 0, 46856, 9948, 16428, 32172],
+             [0, 0, 0, 0, 0, 0, 8030, 3047, 6271, 17146],
+             [0, 0, 0, 0, 0, 0, 6906, 1326, 2294, 8127],
+             [0, 0, 0, 0, 0, 0, 9141, 1509, 2709, 6400],
+             [29757, 15191, 46856, 8030, 6906, 9141, 0, 0, 0, 0],
+             [2407, 2513, 9948, 3047, 1326, 1509, 0, 0, 0, 0],
+             [3278, 3234, 16428, 6271, 2294, 2709, 0, 0, 0, 0],
+             [6403, 5381, 32172, 17146, 8127, 6400, 0, 0, 0, 0]];
+
+
+
+ const svg = d3.select("#my_dataviz")
+     .append("svg")
+     .attr("viewBox", [-width / 2, -height / 2, width, height])
+     .attr("font-size", 10)
+     .attr("font-family", "sans-serif")
+     .style("width", "45%")
+     .style("height", "auto");
+
+ const chords = chord(data);
+
+ const group = svg.append("g")
+   .selectAll("g")
+   .data(chords.groups)
+   .enter().append("g");
+
+ const groupPath = group.append("path")
+   .attr("class", "group")
+   .attr("fill", d => color(d.index))
+   .attr("stroke", d => d3.rgb(color(d.index)).darker())
+   .attr("d", arc)
+   .attr("id", function(d, i) { return "group" + d.index; }) //add id
+   .on("mouseover", fade(.1))
+   .on("mouseout", fade(opacityDefault));
+
+ group.append("text")
+    .attr("x", 5)
+    .attr("dy", 15)
+    .append("textPath")
+    .attr("xlink:href", function(d) { return "#group" + d.index; })
+    .text(function(chords, i){return names[i];})
+    .style("fill", "black");
+
+ const groupTick = group.append("g")
+   .selectAll("g")
+   .data(d => groupTicks(d, 1e3))
+   .enter().append("g")
+   .attr("transform", d => `rotate(${d.angle * 180 / Math.PI - 90}) translate(${outerRadius},0)`);
+
+ groupTick.append("line")
+     .attr("stroke", "#000")
+     .attr("x2", 6);
+
+ groupTick
+   .filter(d => d.value % 5e3 === 0)
+   .append("text")
+     .attr("x", 8)
+     .attr("dy", ".35em")
+     .attr("transform", d => d.angle > Math.PI ? "rotate(180) translate(-16)" : null)
+     .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
+     .text(d => formatValue(d.value));
+
+const ribbons = svg.append("g")
+     .attr("fill-opacity", 0.67)
+   .selectAll("path")
+   .data(chords)
+   .enter().append("path")
+     .attr("class", "ribbons")
+     .attr("d", ribbon)
+     .attr("fill", d => color(d.target.index))
+     .attr("stroke", d => d3.rgb(color(d.target.index)).darker())
+   .on("mouseover", function(d) {
+     tooltip.transition()
+       .duration(200)
+       .style("opacity", opacityDefault);
+     tooltip.html(d.source.value + " videos in " + names[d.source.index] + " are " + names[d.target.index])
+       .style("left", (d3.event.pageX + 5) + "px")
+       .style("top", (d3.event.pageY - 28) + "px");
+     // fade other ribbons
+     ribbons
+       .filter(dd => dd !== d)
+       .transition()
+       .style('opacity', 0.1);
+     // fade other groups
+     groupPath
+       .filter((dd,i) => dd.index !== d.source.index && dd.index !== d.target.index)
+       .transition()
+       .style("opacity", 0.1);
+     })
+   .on("mouseout", function(d) {
+     tooltip.transition()
+       .duration(500)
+       .style("opacity", 0);
+     // unfade ribbons
+     ribbons
+       .transition()
+       .style('opacity', opacityDefault);
+     // unfade groups
+     groupPath
+       .transition()
+       .style("opacity", opacityDefault);
+     });
+
+//Returns an event handler for fading a given chord group.
+function fade(opacity) {
+   return function(d,i) {
+      ribbons
+       .filter(function(dd) { return dd.source.index != d.index &&       dd.target.index != d.index; })
+       .transition()
+       .style("opacity", opacity);
+       // fade all other groups
+       groupPath
+         .filter(function(dd) { return dd.index != d.index; })
+         .transition()
+         .style("opacity", opacity);
+   };
+ }
+
+</script>
