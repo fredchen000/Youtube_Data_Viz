@@ -1,0 +1,101 @@
+/* global styles */
+@import './normalize.scss';
+
+@import './variables.scss';
+@import './links';
+
+html, body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  outline: none;
+}
+
+#root {
+  position: relative;
+  height: 100vh;
+}
+
+.fill-parent {
+  min-height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.fill-space {
+  flex: 1;
+}
+
+.absolute-parent {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.page-animation {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.subpages {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.subpages-empty {
+  pointer-events: none;
+}
+
+.clearfix:after {
+  content:"\200B";
+  display:block;
+  height:0;
+  clear:both;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: "Microsoft Yahei", sans-serif;
+  font-weight: normal;
+}
+
+div {
+  z-index: 0;
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+}

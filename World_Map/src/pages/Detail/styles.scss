@@ -1,0 +1,138 @@
+@import '@/styles/variables.scss';
+
+:local(.body) {
+  position: relative;
+  width: 100vw;
+  height: auto;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 150px);
+  font-family: 'Noto Serif TC', serif;
+  background-color: white;
+  > .infoPlain{
+    width: 100vw;
+    height: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    > .stripName{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 40px;
+      margin: 20px 0px;
+      width: 70%;
+      font-size: 18px;
+      @media (min-width: 768px) {
+        font-size: 32px;
+      }
+    }
+    > .error{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 40px;
+      margin: 20px 0px;
+      width: 70%;
+      @media (min-width: 768px) {
+        font-size: 16px;
+      }
+    }
+    > .chart{
+      height: 350px;
+      width: 90%;
+      font-size: 32px;
+      margin: 20px 0px;
+      @media (min-width: 768px) {
+        width: 70%;
+      }
+    }
+    > .classifier{
+      width: 90%;
+      height: 150px;
+      margin: 20px 0px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(57, 63, 72, 0.8);
+      padding: 10px 20px;
+      @media (min-width: 768px) {
+        width: 70%;
+      }
+      > .cell{
+        width: 20%;
+        height: 150px;
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content:space-around;
+        align-items: center;
+        font-family: iconfont;
+        @media (max-width: 768px) {
+          font-size: 16px;
+        }
+        > .iconRed{
+          font-size: 32px;
+          color: red;
+        }
+        > .iconGreen{
+          font-size: 32px;
+          color: #74E39A;
+        }
+      }
+    }
+    > .news{
+      width: 90%;
+      font-size: 32px;
+      margin: 20px 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      @media (min-width: 768px) {
+        width: 70%;
+      }
+      > .stripName{
+        > .iconRed{
+          margin-left: 20px;
+          font-family: iconfont;
+          font-size: 20px;
+          color: #ff9999;
+        }
+        > .iconGreen{
+          margin-left: 20px;
+          font-family: iconfont;
+          font-size: 20px;
+          color: #74E39A;
+        }
+      }
+      > .newsCards{
+        margin:15px 10px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 18px;
+        word-wrap:break-word;
+      }
+      > .box{
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(57, 63, 72, 0.8);
+        padding: 10px 10px;
+      }
+      > .green{
+        background-color: #74E39A;
+      }
+      > .red{
+        background-color: #ff9999;
+      }
+    }
+  }
+}

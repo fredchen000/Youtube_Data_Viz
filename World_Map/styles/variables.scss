@@ -1,0 +1,37 @@
+@import url(https://fonts.googleapis.com/css?family=Nixie+One);
+@import url(https://fonts.googleapis.com/css?family=Amatica+SC);
+@import url(//fonts.googleapis.com/earlyaccess/notosanskaithi.css);
+
+
+$fine-color: dodgerblue;
+$primary: #ffba00;
+$secondary: #F39D1C;
+$almost-black: #14171E;
+$lesser-black: #21262C;
+$main-gray: #757575;
+$dark-gray: #666666;
+$light-gray: #95989A;
+$lesser-gray: #DDDDDD;
+$white-gray: #EEEEEE;
+$almost-white: #FAFAFA;
+
+$ease-out: cubic-bezier(0.2,0.7,0.5,1);
+.header.shadow {
+  -webkit-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+  -moz-box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+  box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+}
+
+.icon{
+  font-family: iconfont;
+}
+
+@font-face {
+  font-family: 'iconfont';  /* project id 1333053 */
+  src: url('//at.alicdn.com/t/font_1333053_2yq9g98dflj.eot');
+  src: url('//at.alicdn.com/t/font_1333053_2yq9g98dflj.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1333053_2yq9g98dflj.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1333053_2yq9g98dflj.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1333053_2yq9g98dflj.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1333053_2yq9g98dflj.svg#iconfont') format('svg');
+}
