@@ -20,7 +20,7 @@ Word_Cloud
 chord
 - Chord Diagram Visualization
 
-parallel
+parallel coordinates
 - Parallel Diagram Visualization
 
 License
