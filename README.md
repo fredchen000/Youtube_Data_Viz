@@ -1,5 +1,5 @@
 # COMP4462_2020Final_Project
-Final Project on Youtube trending video data analysis from group DataTube 
+COMP4462 Final_Project on Youtube trending video data analysis from group DataTube 
 
 Due to privacy issue, we didn't include the dataset in this repository.  
 Please download the dataset from Kaggle: [Trending YouTube Video Statistics](https://www.kaggle.com/datasnaek/youtube-new)
